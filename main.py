@@ -6,6 +6,19 @@ import numpy as np
 import time
 
 def find_equal_probability_circuit(shots, noisy_qvm, specialized_cost):
+    """
+    Finds the optimal parameter for a circuit that returns |00> and |11> with equal probabilities
+
+    Parameters:
+    -----------
+    shots            : The number of trails for which the pyquil executable needs to be run using a QuantumComputer
+    noisy_qvm        : This flag constructs a QuantumComputer with/without noise. If True, a QuantumComputer with a noise
+                       model will be created
+    specialized_cost : This flag determines whether the final state should be a|00> + b|11> and not
+                       a|00> - b|11>. If True, a modified cost function is used that ensures that only
+                       states of the form a|00> + b|11> are produced
+    """
+
     epc = EqualProbabilityCircuit()
     parameter_optimizer = ParameterOptimizer()
 
@@ -19,6 +32,16 @@ def find_equal_probability_circuit(shots, noisy_qvm, specialized_cost):
     return factor, state, state_probabilities, iterations
 
 def generate_circuit_results(specialized_cost):
+    """
+    Generates Gradient Descent comparison results for limited number of shots per iteration and noise
+
+    Parameters:
+    -----------
+    specialized_cost : This flag determines whether the final state should be a|00> + b|11> and not
+                       a|00> - b|11>. If True, a modified cost function is used that ensures that only
+                       states of the form a|00> + b|11> are produced
+    """
+
     shots = 1
     noisy_qvm = False
     print('\n{:<8} {:<13} {:<15} {:<20} {:<20} {:<12} {:<6} {:<15}'.format("Shots", "Noisy QVM", "Parameter", "Probability |00>", "Probability |11>","Iterations", "Time", "State"))

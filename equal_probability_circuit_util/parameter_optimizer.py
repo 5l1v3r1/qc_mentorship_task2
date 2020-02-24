@@ -1,14 +1,18 @@
+
 import numpy as np
+import random
 
 class ParameterOptimizer():
 
     def __init__(self):
         self.theta = 0
 
-    def cost_function(self, x):
-        return x - 0.5
+    def cost_function(self, x00, x11, specialized_cost = False):
+        if specialized_cost:
+            return (x11 - 0.5)
+        return (x00 - x11)**2
 
-    def optimize_circuit_parameter(self, qc, executable, shots, verbose = False):
+    def optimize_circuit_parameter(self, qc, executable, shots, verbose = False, specialized_cost = False):
         learning_rate = 0.1
         precision = 0
         previous_step_size = 1
@@ -18,13 +22,14 @@ class ParameterOptimizer():
             previous_theta = self.theta
             measurement_bitstrings = qc.run(executable, memory_map={'theta' : [self.theta]})
             sum_bitstrings = np.sum(measurement_bitstrings, axis=1)
-            probability = np.count_nonzero(sum_bitstrings) / shots
-            self.theta = self.theta - learning_rate*self.cost_function(probability)
+            probability00 = list(sum_bitstrings).count(0) / shots
+            probability11 = list(sum_bitstrings).count(2) / shots
+            self.theta = self.theta - learning_rate*self.cost_function(probability00, probability11)
             previous_step_size = abs(self.theta - previous_theta)
             iteration = iteration + 1
             factor = np.round(self.theta / np.pi, 2)
             if verbose and iteration % 20 == 0:
-                print("Iteration", iteration, "\nProbability of |00> :", (1 - probability), "\nProbability of |11> :", probability, "\nCost Value:", self.cost_function(probability), "\nTheta Value:", factor, "pi")
+                print("Iteration", iteration, "\nProbability of |00> :", probability00, "\nProbability of |11> :", probability11, "\nCost Value:", self.cost_function(probability00, probability11), "\nTheta Value:", factor, "pi")
 
         return factor, iteration
 

@@ -1,4 +1,4 @@
-# QC Mentorship Problem 2 
+## QC Mentorship Problem 2 
 ### Problem Statement:
 To find a circuit that returns `|00>` and `|11>` with equal probability where the circuit is parameterized, contains only `RX`, `RY` and `CNOT` gates and all parameters are determined using Gradient Descent
 

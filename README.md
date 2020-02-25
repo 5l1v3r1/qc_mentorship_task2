@@ -14,6 +14,15 @@ We consider two qubits `q0` and `q1` both intialized to `|0>`. A circuit that re
 For determining the parameter using gradient descent, we start with the parameter initialized to `0` and use a cost function of the form `(prob00 - prob11)^2` where `prob00` and `prob11` are probabilities of the states `|00>` and `|11>` respectively when the circuit is run for given number of trials. The cost function encodes the condition that the probabilities of `|00>` and `|11>` must be equal which is the objective of the given problem.
 
 ### Code Structure:
+The code in this repository is structured as follows:
+1. `equal_probability_circuit_util/equal_probability_circuit.py` : Includes utilities for constructing a circuit that returns `|00>` and `|11>` with equal probabilities using the appraoch described above, running the circuit for a limited number of trials and verifying the final state produced using the parameter determined from gradient descent
+2. `equal_probability_circuit_util/parameter_optimizer.py` : Includes utilities for performing gradient descent to determine the parameter for equal probability circuit and a cost function that measures the performance
+3. `main.py` : Generates a comparison of results produced by applying gradient descent for the parameter of the equal probability circuit
+
+### Bonus Question:
+To ensure that our circuit returns only states of the form `a|00> + b|11>` and not `a|00> - b|11>` we use a different cost function `prob11 - 0.5` where `prob11` is the probability of the state `|11>`. This cost function encodes the condition that the probability of the state `|11>` must be `1/2` for it to be equal to the probability of `|00>` and vice versa.
+
+
 
 
 

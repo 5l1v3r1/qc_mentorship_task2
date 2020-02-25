@@ -51,13 +51,13 @@ class EqualProbabilityCircuit:
 
         parameteric_program = Program()
 
-        if theta is None and not verify:
+        if theta is None:
             theta = parameteric_program.declare("theta", memory_type = "REAL")
         
         parameteric_program.inst(RY(theta, 0))
         parameteric_program.inst(CNOT(0, 1))
 
-        if theta is None and not verify:
+        if not verify:
             ro = parameteric_program.declare("ro", memory_type = "BIT", memory_size = 2)
             parameteric_program.inst(MEASURE(0, ro[0]))
             parameteric_program.inst(MEASURE(1, ro[1]))

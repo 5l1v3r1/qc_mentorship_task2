@@ -17,7 +17,7 @@ For determining the parameter using gradient descent, we start with the paramete
 The code in this repository is structured as follows:
 1. `equal_probability_circuit_util/equal_probability_circuit.py` : Includes utilities for constructing a circuit that returns `|00>` and `|11>` with equal probabilities using the appraoch described above, running the circuit for a limited number of trials and verifying the final state produced using the parameter determined from gradient descent
 2. `equal_probability_circuit_util/parameter_optimizer.py` : Includes utilities for performing gradient descent to determine the parameter for equal probability circuit and a cost function that measures the performance
-3. `main.py` : Generates a comparison of results produced by applying gradient descent for the parameter of the equal probability circuit
+3. `main.py` : Generates a comparison of results produced by applying gradient descent for the parameter of the equal probability circuit. The circuit is run for limited number of trails per iteration and noise
 
 ### Bonus Question:
 To ensure that our circuit returns only states of the form `a|00> + b|11>` and not `a|00> - b|11>` we use a different cost function `prob11 - 0.5` where `prob11` is the probability of the state `|11>`. This cost function encodes the condition that the probability of the state `|11>` must be `1/2` for it to be equal to the probability of `|00>` and vice versa.
